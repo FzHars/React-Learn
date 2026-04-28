@@ -6,6 +6,10 @@ import TodoList from "../todolist/TodoList";
 import Table from "../table/Table";
 import AlertButton from "../button/AlertButton";
 import MyButton from "../button/MyButton";
+import Toolbar from "../button/Toolbar";
+import SearchForm from "../form/SearchForm";
+import SayHello from "../form/SayHelloForm";
+import Counter from "../form/Counter";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,6 +19,16 @@ createRoot(document.getElementById("root")).render(
       <Table />
       <AlertButton text={"Click Me!"} message={"You Click here"} />
       <MyButton text={"Smash Me"} onSmash={() => alert("Woo You Smash Me!!")} />
+      <Toolbar
+        onClick={(e) => {
+          e.stopPropagation();
+          alert("Click Toolbar");
+        }}
+      /> 
+      <SearchForm />
+      <SayHello/>
+      <Counter/>
+      <Counter/>
     </Container>
   </StrictMode>,
 );
