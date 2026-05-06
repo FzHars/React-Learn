@@ -1,17 +1,35 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NotesDispatchContext } from "./NotesContext";
 
-export default function Note({ note, onChange, onDelete }) {
+export default function Note({ note }) {
   const [isEditing, setIsEditing] = useState(false);
+  const dispatch = useContext(NotesDispatchContext);
   let component;
 
   function handleChangeText(e) {
     const newNote = { ...note, text: e.target.value };
-    onChange(newNote);
+    dispatch({
+      ...note,
+      type: "CHANGE_NOTE",
+      text: e.target.value
+    })
   }
 
   function handleChangeDone(e) {
     const newNote = { ...note, done: e.target.checked };
-    onChange(newNote);
+    dispatch({
+      ...note,
+      type: "CHANGE_NOTE",
+      done: e.target.checked
+    })
+  }
+
+  function handleDelete(){
+    dispatch({
+      ...note,
+      type: "DELETE_NOTE",
+      id: note.id
+    })
   }
   if (isEditing) {
     component = (
@@ -37,7 +55,7 @@ export default function Note({ note, onChange, onDelete }) {
           onChange={handleChangeDone}
         />
         {component}
-        <button onClick={() => onDelete(note)}>Delete</button>
+        <button onClick={handleDelete}>Delete</button>
       </label>
     </>
   );
